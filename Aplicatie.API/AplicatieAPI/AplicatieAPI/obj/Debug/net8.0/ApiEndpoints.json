@@ -12,11 +12,27 @@
   {
     "ContainingType": "AplicatieAPI.Controllers.ProductController",
     "Method": "GetAllProductsFromAWS",
-    "RelativePath": "aws",
+    "RelativePath": "api/Product/aws",
     "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,
     "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "AplicatieAPI.Controllers.ProductController",
+    "Method": "CreateProduct",
+    "RelativePath": "api/Product/create",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "productRequest",
+        "Type": "AplicatieAPI.Entities.ProductEntity",
+        "IsRequired": true
+      }
+    ],
     "ReturnTypes": []
   },
   {

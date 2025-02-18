@@ -3,7 +3,9 @@ using Amazon.DynamoDBv2.DataModel;
 using Amazon.DynamoDBv2.Model;
 using AplicatieAPI.Entities;
 using AplicatieAPI.Models;
+using Azure.Core;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using static System.Net.Mime.MediaTypeNames;
 
@@ -13,14 +15,12 @@ namespace AplicatieAPI.Controllers
     [Route("api/[controller]")]
     public class ProductController : Controller
     {
-        private readonly IDynamoDBContext _dbContext;
 
         private static readonly AmazonDynamoDBClient client = new AmazonDynamoDBClient("AKIA53RMINWZZUNWTIHR", "pttUOu8dOa0p9Xszd9Ei5fF/r11WlCFOkY9AvmnT", Amazon.RegionEndpoint.EUCentral1);
         private static readonly DynamoDBContext context = new DynamoDBContext(client);
 
-        public ProductController(IDynamoDBContext dbContext)
+        public ProductController()
         {
-            _dbContext = dbContext;
         }
      
         [HttpGet]
@@ -37,7 +37,7 @@ namespace AplicatieAPI.Controllers
             return Ok(products);
         }
 
-        [HttpGet("/aws")]
+        [HttpGet("aws")]
         public async Task<IActionResult> GetAllProductsFromAWS()
         {
     
@@ -47,6 +47,16 @@ namespace AplicatieAPI.Controllers
             return Ok(productList);
 ;
         }
+
+        [HttpPost("create")]
+        public async Task<IActionResult> CreateProduct([FromBody] ProductEntity productRequest)
+        {
+            productRequest.Id = Guid.NewGuid().ToString();
+            await context.SaveAsync(productRequest);
+
+            return Ok(productRequest);
+        }
+
     }
 
 }

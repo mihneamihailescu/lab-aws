@@ -91,3 +91,4 @@ C:\Users\mmihailescu\Desktop\laborator\Aplicatie.API\AplicatieAPI\AplicatieAPI\o
 C:\Users\mmihailescu\Desktop\laborator\Aplicatie.API\AplicatieAPI\AplicatieAPI\bin\Debug\net8.0\AWSSDK.Core.dll
 C:\Users\mmihailescu\Desktop\laborator\Aplicatie.API\AplicatieAPI\AplicatieAPI\bin\Debug\net8.0\AWSSDK.DynamoDBv2.dll
 C:\Users\mmihailescu\Desktop\laborator\Aplicatie.API\AplicatieAPI\AplicatieAPI\bin\Debug\net8.0\AWSSDK.Extensions.NETCore.Setup.dll
+C:\Users\mmihailescu\Desktop\laborator\Aplicatie.API\AplicatieAPI\AplicatieAPI\obj\Debug\net8.0\AplicatieAPI.sourcelink.json

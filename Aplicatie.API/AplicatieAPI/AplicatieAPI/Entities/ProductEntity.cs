@@ -6,7 +6,7 @@ namespace AplicatieAPI.Entities
     public class ProductEntity
     {
         [DynamoDBHashKey("id")]
-        public string Id { get; set; }
+        public string? Id { get; set; }
 
         [DynamoDBProperty("name")]
         public required string Name { get; set; }
