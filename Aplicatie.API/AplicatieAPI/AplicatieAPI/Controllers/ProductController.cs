@@ -1,6 +1,7 @@
 ﻿using Amazon.DynamoDBv2;
 using Amazon.DynamoDBv2.DataModel;
 using Amazon.DynamoDBv2.Model;
+using Amazon.Runtime.Internal;
 using AplicatieAPI.Entities;
 using AplicatieAPI.Models;
 using Azure.Core;
@@ -8,6 +9,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using static System.Net.Mime.MediaTypeNames;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace AplicatieAPI.Controllers
 {
@@ -40,12 +42,9 @@ namespace AplicatieAPI.Controllers
         [HttpGet("aws")]
         public async Task<IActionResult> GetAllProductsFromAWS()
         {
-    
             var productList = await context.ScanAsync<ProductEntity>(default).GetRemainingAsync();
 
-            Console.Write(productList);
             return Ok(productList);
-;
         }
 
         [HttpPost("create")]
@@ -55,6 +54,48 @@ namespace AplicatieAPI.Controllers
             await context.SaveAsync(productRequest);
 
             return Ok(productRequest);
+        }
+
+
+        [HttpPut("{id}")]
+        public async Task<IActionResult> UpdateProduct(string id, [FromBody] ProductEntity productRequest) 
+        { 
+            var product = await context.LoadAsync<ProductEntity>(id);
+            
+            if (product == null) return NotFound();
+            product.Name = productRequest.Name;
+            product.Quantity = productRequest.Quantity;
+            product.Price = productRequest.Price;
+            product.Description = productRequest.Description;
+
+            await context.SaveAsync(product);
+            return Ok(productRequest);
+        }
+
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetProductById(string id)
+        {
+            var product = await context.LoadAsync<ProductEntity>(id);
+
+            if (product == null) return NotFound();
+           
+            return Ok(product);
+        }
+
+
+        [HttpDelete("delete/{id}")]
+        public async Task<IActionResult> DeleteProduct( string id)
+        {
+            var product = await context.LoadAsync<ProductEntity>(id);
+
+            if (product == null)
+            {
+                return NotFound();
+            }
+            
+            await context.DeleteAsync(product);
+
+            return Ok(product);
         }
 
     }
